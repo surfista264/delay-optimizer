@@ -1,6 +1,11 @@
-from interface import OtimizadorApp
+import sys
+from PyQt6.QtWidgets import QApplication
+from interface_pyqt import OtimizadorPyQt
 
 if __name__ == "__main__":
-    # Cria a instância da nossa aplicação CustomTkinter e inicia o loop da janela
-    app = OtimizadorApp()
-    app.mainloop()
+    app = QApplication(sys.argv)
+    app.setStyle("Fusion")
+    
+    janela = OtimizadorPyQt()
+    janela.show()
+    sys.exit(app.exec())

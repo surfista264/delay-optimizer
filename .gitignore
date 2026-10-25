@@ -3,3 +3,13 @@ dist/
 __pycache__/
 *.spec
 .vscode/
+.continue/
+config.json
+api_key.txt
+secrets.json
+__pycache__/
+.vscode/
+*.pyc
+run.py
+otimizador.log
+main.spec
