@@ -1,15 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Build artifacts
 build/
 dist/
-__pycache__/
 *.spec
+
+# Logs
+*.log
+otimizador.log
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Local configuration and secrets
 .vscode/
+.env
+.env.*
+!.env.example
 .continue/
 config.json
 api_key.txt
 secrets.json
-__pycache__/
-.vscode/
-*.pyc
-run.py
-otimizador.log
-main.spec

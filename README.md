@@ -1,14 +1,27 @@
-# ⚡ Windows Ultimate Optimizer (`0 delay`) - v0.1.0
+# ⚡ Windows Ultimate Optimizer (`0 delay`) - v0.2.0
 
-Um utilitário de otimização e limpeza de alta performance para Windows, desenvolvido em **Python** com uma interface gráfica moderna baseada em **CustomTkinter** e estruturado com **Programação Orientada a Objetos (POO)**.
+Um utilitário de otimização e limpeza para Windows, desenvolvido em **Python** com uma interface gráfica baseada em **PyQt6** e estruturado com **Programação Orientada a Objetos (POO)**.
 
 O objetivo principal deste software é reduzir a latência de periféricos, otimizar a rede, ajustar prioridades de sistema e limpar ficheiros temporários de forma simples, segura e modular.
 
 ---
 
-## 🚀 Funcionalidades da Versão (v0.1.0)
+## 🚀 Funcionalidades
 
 O projeto está dividido em módulos especializados:
+
+*   `main.py`: inicialização da aplicação e da interface.
+*   `interface_pyqt.py`: interface gráfica PyQt6.
+*   `modules/`: módulos de otimização organizados por categoria:
+    *   `sistema.py`: plano de energia, limpeza e ajustes MMCSS.
+    *   `rede.py`: DNS, adaptadores e TCP/IP.
+    *   `privacidade.py`: telemetria, diagnóstico e ID de publicidade.
+    *   `perifericos/gpu_amd.py`: MPO, HAGS e modo MSI da GPU.
+    *   `perifericos/mouse_teclado.py`: rato, teclado e latência de entrada.
+    *   `perifericos/audio.py`: prioridade de áudio e multimédia.
+*   `perifericos.py`: fachada de compatibilidade para imports antigos do backend.
+*   `config.py`: metadados, serviços monitorizados e caminhos padrão.
+*   `logger.py`: configuração centralizada do ficheiro `otimizador.log`.
 
 *   ⌨ **Periféricos:**
     *   Otimização da resposta e velocidade do teclado.
@@ -28,10 +41,50 @@ O projeto está dividido em módulos especializados:
 ## 🛠️ Tecnologias Utilizadas
 
 *   **Python 3.x**
-*   **CustomTkinter** (Interface gráfica moderna em modo escuro)
+*   **PyQt6** (Interface gráfica)
 *   **Módulo `winreg`** (Modificações seguras no Registo do Windows)
 *   **Multithreading** (Para garantir fluidez na interface durante os processos)
 *   **PyInstaller** (Para a compilação do executável `.exe`)
+
+## ▶️ Executar a partir do código
+
+Instala as dependências utilizadas pelo projeto (`PyQt6`, `watchdog` e `psutil`) e inicia a aplicação com:
+
+```powershell
+python main.py
+```
+
+O `psutil` alimenta as métricas de CPU e armazenamento do dashboard. Sem esta dependência, a interface continua a iniciar, mas essas métricas são apresentadas como indisponíveis.
+
+Para reiniciar automaticamente durante o desenvolvimento, executa `python run.py`.
+Os registos são escritos em `otimizador.log`, junto dos ficheiros da aplicação.
+Os backups das configurações são guardados no diretório de dados local do utilizador.
+
+## Usar os módulos na interface
+
+Cada categoria exporta uma classe com métodos estáticos. A interface pode manter
+uma instância por categoria e passar os métodos diretamente aos workers:
+
+```python
+from modules import (
+    OtimizadorAMD,
+    OtimizadorAudio,
+    OtimizadorMouseTeclado,
+    OtimizadorPrivacidade,
+    OtimizadorRede,
+    OtimizadorSistema,
+)
+
+self.otimizador_sistema = OtimizadorSistema()
+self.otimizador_rede = OtimizadorRede()
+self.otimizador_privacidade = OtimizadorPrivacidade()
+self.otimizador_amd = OtimizadorAMD()
+self.otimizador_mouse_teclado = OtimizadorMouseTeclado()
+self.otimizador_audio = OtimizadorAudio()
+
+# Os métodos são estáticos, portanto funcionam via instância ou diretamente na classe.
+tarefa = self.otimizador_sistema.ativar_desempenho_maximo
+```
 
 ---
 
